@@ -1,11 +1,14 @@
 const express = require('express');
 const dotenv = require('dotenv');
+const connectDB = require('./config/db');
 
 const app = express();
 
 // configue to use env vars
 dotenv.config({ path: './config/config.env' });
 
+// connect to mongodb
+connectDB();
 
 //Register Route 
 app.get('/', (req, res) => {
