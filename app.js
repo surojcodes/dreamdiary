@@ -1,5 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
+const exphbs = require('express-handlebars');
+
 const connectDB = require('./config/db');
 
 const app = express();
@@ -10,10 +12,16 @@ dotenv.config({ path: './config/config.env' });
 // connect to mongodb
 connectDB();
 
+// set view engine to handlebars and use .hbs extension
+app.engine('.hbs', exphbs({
+    defaultLayout: 'main',
+    extname: '.hbs'
+}));
+app.set('view engine', '.hbs');
+
+
 //Register Route 
-app.get('/', (req, res) => {
-    res.send('<h1>Welcome to Dream Diary</h1>');
-});
+app.use('/', require('./routes/web'));
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
