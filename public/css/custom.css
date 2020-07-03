@@ -1,0 +1,71 @@
+body{
+    height:80vh;
+    background-image: url('/images/bg4.jpg');
+    background-size: cover;
+    background-position: bottom;
+    background-attachment: fixed;
+}
+.nav-link{
+    color: white !important;
+}
+.overlay{
+    background-color: rgba(0, 0, 0, .7);
+    border-radius:0.4em;
+}
+.form-container{
+    box-shadow: 5px 5px 5px black,-3px -3px 5px black;
+}
+.form{
+    width:60%;
+    margin:0 auto;
+}
+.mt-footer{
+    margin-top:5em;
+}
+.card{
+    color:black !important;
+}
+.bg-dark-trans{
+    background-color:rgba(75, 78, 80, 0.5);
+}
+p.dream-body-para::first-letter{
+    font-weight: bold;
+    color: rgb(08,117,125);
+    font-size: 2.5em;
+    margin-right:0.1em;
+}
+.dream-body{
+    line-height: 2em;
+}
+.my-list-group{
+    background-color: rgba(08,117,125,0.5);
+    border-radius: 0.5em;
+    padding:1.1em;
+    list-style: none;
+}
+.my-list-group .my-list-group-item{
+    padding: 1em;
+    border-bottom: 1px solid rgb(80, 77, 77);
+    cursor: pointer;
+}
+/* .my-list-group .my-list-group-item:first-child{
+    border-top: 1px solid rgb(80, 77, 77);
+} */
+.my-list-group .my-list-group-item:hover{
+    background-color: rgba(08,117,125,0.7);
+}
+.active{
+    background-color: rgba(08,117,125,0.7);
+}
+label,.dataTables_info{
+    color:white !important;
+}
+tbody tr{
+    background: none !important;
+}
+.dashboard-link{
+    color: white;
+}
+.dashboard-link:hover{
+    color: white;
+}

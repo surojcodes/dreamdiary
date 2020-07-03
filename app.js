@@ -1,6 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const exphbs = require('express-handlebars');
+const path = require('path');
 
 const connectDB = require('./config/db');
 
@@ -19,9 +20,13 @@ app.engine('.hbs', exphbs({
 }));
 app.set('view engine', '.hbs');
 
+//static resource folder
+app.use(express.static(path.join(__dirname, 'public')));
 
 //Register Route 
 app.use('/', require('./routes/web'));
+app.use('/auth', require('./routes/auth'));
+
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
