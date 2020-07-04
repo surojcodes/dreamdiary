@@ -4,7 +4,8 @@
         <h2>Login</h2>
         <small>and see what unfolds.....</small>
     </div>
-    <form action="#" class="form">
+    <form action="/auth/login" method="POST" class="form">
+        {{>_message}}
         <div class="form-group">
             <label for="email">Email</label>
             <input type="email" name="email" id="email" class="form-control" placeholder="Enter your email">

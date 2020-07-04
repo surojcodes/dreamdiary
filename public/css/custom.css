@@ -69,3 +69,6 @@ tbody tr{
 .dashboard-link:hover{
     color: white;
 }
+input{
+    color:rgba(08,117,125) !important;
+}

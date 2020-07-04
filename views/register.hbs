@@ -4,14 +4,15 @@
         <h2>Join us</h2>
         <small>and see what unfolds.....</small>
     </div>
-    <form action="#" class="form">
+    <form action="/auth/register" method="POST" class="form">
+        {{>_message}}
         <div class="form-group">
             <label for="name">Name</label>
-            <input type="text" name="name" class="form-control" placeholder="Enter your full name">
+            <input type="text" name="name" class="form-control" placeholder="Enter your full name" value="{{name}}">
         </div>
         <div class="form-group">
             <label for="email">Email</label>
-            <input type="email" name="email" class="form-control" placeholder="Enter your email">
+            <input type="email" name="email" class="form-control" placeholder="Enter your email" value="{{email}}">
         </div>
         <div class="form-group mb-4">
             <label for="password">Password</label>
