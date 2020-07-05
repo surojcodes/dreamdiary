@@ -16,7 +16,6 @@
 
 <body>
     {{> _navbar_dashboard }}
-
     <div class="container overlay form-container text-white">
         <div class="row justify-content-around">
             <div class="col-md-3 menu mt-5">
@@ -28,13 +27,16 @@
                 </div>
                 <hr>
                 <ul class="my-list-group">
-                    <li class="my-list-group-item "><a class="dashboard-link" href="/auth/dashboard">My Dreams<span
-                                class="badge badge-pill badge-info float-right">
+                    <li class="my-list-group-item"><a class="dashboard-link" href="/auth/dashboard">My
+                            Dreams<span class="badge badge-pill badge-info float-right">
                                 19</a></span>
                     </li>
-                    <li class="my-list-group-item active"><a href="/auth/dashboard/add-dream" class="dashboard-link">Add
+                    <li class="my-list-group-item "><a href="/auth/dashboard/add-dream" class="dashboard-link">Add
                             Dreams</a></li>
                 </ul>
+                <div class="text-center mb-4">
+                    <a href="/auth/logout" class="btn btn-danger">Logout</a>
+                </div>
             </div>
             <div class="col-md-8  mt-5">
                 {{{body}}}

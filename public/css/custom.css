@@ -72,3 +72,19 @@ tbody tr{
 input{
     color:rgba(08,117,125) !important;
 }
+.btn-google{
+    background:#F34A37;
+    color:white;
+}
+.btn-facebook{
+    background:#465993;
+    color:white;
+}
+.btn-twitter{
+    background:#76A9EA;
+    color:white;
+}
+.btn-github{
+    background:rgb(68, 67, 67);
+    color:white;
+}

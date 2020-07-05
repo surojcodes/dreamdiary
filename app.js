@@ -18,6 +18,10 @@ const app = express();
 // configue to use env vars
 dotenv.config({ path: './config/config.env' });
 
+//configue google oauth
+const gpassport = require('passport');
+require('./config/passport_google')(gpassport);
+
 // body parser
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
