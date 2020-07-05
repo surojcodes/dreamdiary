@@ -9,7 +9,7 @@ module.exports = (passport) => {
         callbackURL: '/auth/google/callback'
     }, async (accessToken, refreshToken, profile, done) => {
         try {
-            let user = await User.findOne({ googleId: profile.id });
+            let user = await User.findOne({ googleId: profile.id }).lean();
             if (user) {
                 done(null, user);
             } else {

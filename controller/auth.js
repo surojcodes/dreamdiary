@@ -38,9 +38,14 @@ exports.register = async (req, res, next) => {
         return res.render('register', { errors, name, email })
     }
     try {
+        let user = await User.findOne({ email });
+        if (user) {
+            errors.push({ msg: 'Email address already registered!' });
+            return res.render('register', { errors, name, email })
+        }
         const salt = await bcrypt.genSalt(10);
         const password = await bcrypt.hash(pwd, salt);
-        let user = {
+        user = {
             name, email, password
         }
         await User.create(user);
@@ -48,11 +53,11 @@ exports.register = async (req, res, next) => {
             success: 'Account created, you can now log in!'
         });
     } catch (err) {
-        // mongoose duplicate key
-        if (err.code === 11000) {
-            errors.push({ msg: 'Email address already registered!' });
-            return res.render('register', { errors, name, email })
-        }
+        // // mongoose duplicate key
+        // if (err.code === 11000) {
+        //     errors.push({ msg: 'Email address already registered!' });
+        //     return res.render('register', { errors, name, email })
+        // }
         console.log(err);
         res.render('error/500');
     }
@@ -63,6 +68,9 @@ exports.forgotPassword = (req, res, next) => {
 exports.loadDashboard = (req, res, next) => {
     res.render('dashboard_dreams', {
         layout: 'dashboard',
+        name: req.user.name,
+        email: req.user.email || null
+
     });
 }
 exports.logOut = (req, res, next) => {
@@ -73,5 +81,7 @@ exports.logOut = (req, res, next) => {
 exports.addDream = (req, res, next) => {
     res.render('dashboard_add_dream', {
         layout: 'dashboard',
+        name: req.user.name,
+        email: req.user.email || null
     });
 }

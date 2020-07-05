@@ -4,8 +4,15 @@ const exphbs = require('express-handlebars');
 const path = require('path');
 const mongoose = require('mongoose');
 
-const passport = require('passport');
-require('./config/passport_local')(passport);
+const lpassport = require('passport');
+require('./config/passport_local')(lpassport);
+
+// configue to use env vars
+dotenv.config({ path: './config/config.env' });
+
+//configue google oauth
+const gpassport = require('passport');
+require('./config/passport_google')(gpassport);
 
 const flash = require('connect-flash');
 const session = require('express-session');
@@ -14,13 +21,6 @@ const MongoStore = require('connect-mongo')(session);
 const connectDB = require('./config/db');
 
 const app = express();
-
-// configue to use env vars
-dotenv.config({ path: './config/config.env' });
-
-//configue google oauth
-const gpassport = require('passport');
-require('./config/passport_google')(gpassport);
 
 // body parser
 app.use(express.json());
@@ -48,10 +48,12 @@ app.use(session({
     store: new MongoStore({ mongooseConnection: mongoose.connection })
 }));
 
-app.use(passport.initialize());
-app.use(passport.session());
+app.use(lpassport.initialize());
+app.use(lpassport.session());
+app.use(gpassport.initialize());
+app.use(gpassport.session());
 
-//global vars for flash messages
+//global vars 
 app.use((req, res, next) => {
     res.locals.error = req.flash('error');
     res.locals.error_msg = req.flash('error_msg');
