@@ -26,14 +26,16 @@
         <div class="text-right pb-1">
             <small>Already have an account? Login <a href="/auth/register">here</a></small>
         </div>
-        <div class="social-login pb-5 text-center">
-            Sign Up with &nbsp; <br> <br>
-            <a href="/auth/google" class="btn btn-google"><i class="fab fa-google"></i></a>
-            <a href="/auth/facebook" class="btn btn-facebook"><i class="fab fa-facebook"></i></a>
-            <a href="/auth/twitter" class="btn btn-twitter"><i class="fab fa-twitter"></i></a>
-            <a href="/auth/github" class="btn btn-github"><i class="fab fa-github"></i></a>
-        </div>
-    </form>
 
+    </form>
+    <div class="social-login pb-5 text-center">
+        Sign Up with &nbsp; <br> <br>
+        <form action="/auth/login" method="POST">
+            <button type="submit" class="btn btn-google"><i class="fab fa-google"></i></button>
+        </form>
+        <a href="/auth/facebook" class="btn btn-facebook"><i class="fab fa-facebook"></i></a>
+        <a href="/auth/twitter" class="btn btn-twitter"><i class="fab fa-twitter"></i></a>
+        <a href="/auth/github" class="btn btn-github"><i class="fab fa-github"></i></a>
+    </div>
 
 </div>

@@ -10,11 +10,13 @@ const { showLoginForm, showRegisterForm, register, forgotPassword, loadDashboard
 
 const router = express.Router();
 
-router.route('/login').get(ensureGuest, showLoginForm).post(ensureGuest, passport.authenticate('local', {
-    successRedirect: '/auth/dashboard',
-    failureRedirect: '/auth/login',
-    failureFlash: true
-}));
+router.route('/login').get(ensureGuest, showLoginForm).
+    post(ensureGuest, passport.authenticate(['local', 'google',], {
+        scope: 'profile',
+        successRedirect: '/auth/dashboard',
+        failureRedirect: '/auth/login',
+        failureFlash: true
+    }));
 
 router.route('/register').get(ensureGuest, showRegisterForm).post(ensureGuest, register);
 router.route('/forgot-password').get(ensureAuth, forgotPassword);
@@ -22,7 +24,7 @@ router.route('/dashboard').get(ensureAuth, loadDashboard);
 router.route('/dashboard/add-dream').get(ensureAuth, addDream);
 router.route('/logout').get(logOut);
 
-router.route('/google').get(passport.authenticate('google', { scope: ['profile'] }));
+// router.route('/google').get(passport.authenticate('google', { scope: ['profile'] }));
 router.route('/google/callback').get(passport.authenticate('google',
     { failureRedirect: '/auth/login' }),
     (req, res) => {

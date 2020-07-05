@@ -4,15 +4,12 @@ const exphbs = require('express-handlebars');
 const path = require('path');
 const mongoose = require('mongoose');
 
-const lpassport = require('passport');
-require('./config/passport_local')(lpassport);
-
 // configue to use env vars
 dotenv.config({ path: './config/config.env' });
 
 //configue google oauth
-const gpassport = require('passport');
-require('./config/passport_google')(gpassport);
+const passport = require('passport');
+require('./config/passport')(passport);
 
 const flash = require('connect-flash');
 const session = require('express-session');
@@ -47,11 +44,8 @@ app.use(session({
     saveUninitialized: false,
     store: new MongoStore({ mongooseConnection: mongoose.connection })
 }));
-
-app.use(lpassport.initialize()); app.use(gpassport.initialize());
-app.use(lpassport.session());
-
-app.use(gpassport.session());
+app.use(passport.initialize());
+app.use(passport.session());
 
 //global vars 
 app.use((req, res, next) => {
