@@ -48,9 +48,9 @@ app.use(session({
     store: new MongoStore({ mongooseConnection: mongoose.connection })
 }));
 
-app.use(lpassport.initialize());
+app.use(lpassport.initialize()); app.use(gpassport.initialize());
 app.use(lpassport.session());
-app.use(gpassport.initialize());
+
 app.use(gpassport.session());
 
 //global vars 
