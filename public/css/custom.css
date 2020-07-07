@@ -1,27 +1,49 @@
 
 .nav-link{
-    color: white !important;
+    text-transform: uppercase;
+    color:#ccc !important;
+}
+.nav-link:hover{
+    color:white !important;
+    font-weight: bold;
+}
+.text-gray{
+    color: #ccc;
 }
 .overlay{
-    background-color: rgba(0, 0, 0, .7);
+    background-color: rgba(0, 0, 0, .4);
     border-radius:0.4em;
 }
+.overlay-dream{
+    background-color: rgba(0, 0, 0, .8);
+    border-radius:0.4em;
+    color:#ccc;
+}
 .form-container{
-    box-shadow: 5px 5px 5px black,-3px -3px 5px black;
+    box-shadow: 2px 2px 5px black;
 }
 .form{
-    width:60%;
+    width:62%;
     margin:0 auto;
 }
 .mt-footer{
     margin-top:5em;
 }
-.card{
-    color:black !important;
+.custom-card{
+    width:90%;
+    margin:auto;
+    border:1px solid rgb(158, 154, 154);
+    padding:1em;
+    border-radius: 0.5em;
+    background-color:rgba(75, 78, 80, 0.8);
 }
-.bg-dark-trans{
+.text-custom-muted{
+    color:#ccc;
+}
+
+/* .bg-dark-trans{
     background-color:rgba(75, 78, 80, 0.5);
-}
+} */
 p.dream-body-para::first-letter{
     font-weight: bold;
     color: rgb(08,117,125);

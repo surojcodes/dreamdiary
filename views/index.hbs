@@ -1,14 +1,13 @@
 {{!-- Our landing page --}}
 <header>
-    <div class="d-flex flex-column justify-content-center align-items-center text-white text-center overlay"
-        style="height:65vh">
+    <div class="d-flex flex-column justify-content-center align-items-center  text-center " style="height:64vh">
         <div class="tagline">
-            <p class=" display-3"><strong>Log your dreams</strong></p>
-            <small>and see what unfolds...</small>
+            <p class=" display-3"><strong>Log your <span class="text-primary">dreams</span> </strong></p>
+            <p>and see what unfolds...</p>
         </div>
-        <div class="btns mt-5">
-            <a href="/dreams" class="btn btn-outline-info">Read Dreams</a>
-            <a href="/auth/login" class="btn btn-info">Join Us</a>
+        <div class="btns mt-2">
+            <a href="/auth/register" class="btn btn-dark">Join Us</a>
         </div>
     </div>
 </header>
+{{> _footer_fixed }}
