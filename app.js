@@ -55,8 +55,6 @@ app.use((req, res, next) => {
     next();
 });
 
-
-
 //Register Route 
 app.use('/', require('./routes/web'));
 app.use('/auth', require('./routes/auth'));

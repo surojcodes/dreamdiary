@@ -11,12 +11,13 @@ const { showLoginForm, showRegisterForm, register, forgotPassword, loadDashboard
 const router = express.Router();
 
 router.route('/login').get(ensureGuest, showLoginForm).
-    post(ensureGuest, passport.authenticate(['local', 'google',], {
+    post(ensureGuest, passport.authenticate(['local', 'google'], {
         scope: 'profile',
         successRedirect: '/auth/dashboard',
         failureRedirect: '/auth/login',
         failureFlash: true
     }));
+router.route('/facebook-login').post(ensureGuest, passport.authenticate('facebook'));
 
 router.route('/register').get(ensureGuest, showRegisterForm).post(ensureGuest, register);
 router.route('/forgot-password').get(ensureAuth, forgotPassword);
@@ -30,5 +31,8 @@ router.route('/google/callback').get(passport.authenticate('google',
     (req, res) => {
         res.redirect('/auth/dashboard');
     });
-
+router.get('/facebook/callback',
+    passport.authenticate('facebook',
+        { successRedirect: '/auth/dashboard', failureRedirect: '/auth/login' }
+    ));
 module.exports = router;
