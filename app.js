@@ -26,8 +26,14 @@ app.use(express.urlencoded({ extended: false }));
 // connect to mongodb
 connectDB();
 
+//Handlebar helpers
+const { formatDate, select } = require('./helpers/hbs');
+
 // set view engine to handlebars and use .hbs extension
 app.engine('.hbs', exphbs({
+    helpers: {
+        formatDate, select
+    },
     defaultLayout: 'main',
     extname: '.hbs'
 }));
@@ -58,6 +64,8 @@ app.use((req, res, next) => {
 //Register Route 
 app.use('/', require('./routes/web'));
 app.use('/auth', require('./routes/auth'));
+app.use('/dreams', require('./routes/dream'));
+
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

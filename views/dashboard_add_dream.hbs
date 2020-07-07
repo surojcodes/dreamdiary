@@ -1,25 +1,37 @@
 <h2>Add a dream log</h2>
 <small>and see what unfolds...</small>
 <hr>
-<form action="#" class="mt-4 pb-5">
+<form action="/dreams/add-dream" method="POST" class="mt-4 pb-5">
     <div class="form-group">
-        <label for="title">Title</label>
-        <input type="text" class="form-control" placeholder="Enter dream title">
+        <label for="title">Title * </label>
+        <input type="text" name="title" class="form-control" placeholder="Enter dream title" value="{{title}}">
     </div>
     <div class="form-group">
-        <label for="excerpt">Excerpt</label>
-        <input type="text" class="form-control" placeholder="Dream summary">
+        <label for="excerpt">Excerpt * </label>
+        <input type="text" name="excerpt" class="form-control" placeholder="Dream summary" value="{{excerpt}}">
+        <small>Please limit your excerpt to 100 characters</small>
     </div>
     <div class="form-group">
-        <label for="visibility">Visibility</label>
+        <label for="visibility">Visibility * </label>
         <select name="visibility" class="form-control">
-            <option value="0">Private</option>
-            <option value="1">Public</option>
+            {{#select visibility}}
+            <option value="private">Private</option>
+            <option value="public">Public</option>
+            {{/select}}
         </select>
     </div>
     <div class="form-group">
-        <label for="body">Dream Body</label>
-        <textarea name="body" class="form-control" placeholder="Write your dream here"></textarea>
+        <label for="content">Dream Body * </label>
+        <textarea name="content" id="body" class="form-control"
+            placeholder="Write your dream here">{{content}}</textarea>
     </div>
-    <button type="submit" class="btn btn-info">Save</button>
+    <div class="form-group">
+        <label for="tags">Tags for post </label>
+        <input type="text" name="tags" class="form-control" placeholder="e.g. weird, flying, gooddream" value="{{tags}}"">
+        <small>Please add tags as comma separated single word</small>
+    </div>
+    <button type=" submit" class="btn btn-info">Save</button>
 </form>
+<script>
+    CKEDITOR.replace('body');
+</script>

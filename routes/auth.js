@@ -6,7 +6,7 @@
 const express = require('express');
 const passport = require('passport');
 const { ensureAuth, ensureGuest } = require('../middleware/auth');
-const { showLoginForm, showRegisterForm, register, forgotPassword, loadDashboard, logOut, addDream } = require('../controller/auth');
+const { showLoginForm, showRegisterForm, register, forgotPassword, loadDashboard, logOut } = require('../controller/auth');
 
 const router = express.Router();
 
@@ -22,7 +22,6 @@ router.route('/facebook-login').post(ensureGuest, passport.authenticate('faceboo
 router.route('/register').get(ensureGuest, showRegisterForm).post(ensureGuest, register);
 router.route('/forgot-password').get(ensureAuth, forgotPassword);
 router.route('/dashboard').get(ensureAuth, loadDashboard);
-router.route('/dashboard/add-dream').get(ensureAuth, addDream);
 router.route('/logout').get(logOut);
 
 // router.route('/google').get(passport.authenticate('google', { scope: ['profile'] }));

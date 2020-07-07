@@ -19,6 +19,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"
         integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+    <script src="https://cdn.ckeditor.com/4.14.1/basic/ckeditor.js"></script>
+
     <link rel="stylesheet" href="/css/custombootstrap.css">
     <link rel="stylesheet" href="/css/custom.css">
     <title>Dream Diary | Dashboard</title>
@@ -29,18 +31,18 @@
         <div class="row justify-content-around">
             <div class="col-md-3 menu mt-5">
                 <div class="text-center">
-                    <img src="/images/me.png" class="mt-3" alt="profile-image" width="30%" style="border-radius:50%">
-                    <p class="m-1"><span class="text-primary"> {{name}}</span> </p>
+                    <img src="/images/me.png" class="mt-3" alt="profile-image" width="40%" style="border-radius:50%">
+                    <h1 class="m-1"><span class="text-primary"> {{name}}</span> </h1>
                     <p class="m-1">{{email}}</p>
                     <small>Welcome to your dashboard...</small>
                 </div>
                 <hr>
                 <ul class="my-list-group">
-                    <li class="my-list-group-item"><a class="dashboard-link" href="/auth/dashboard">My
+                    <li class="my-list-group-item"><a class="dashboard-link d-block" href="/auth/dashboard">My
                             Dreams<span class="badge badge-pill badge-info float-right">
-                                19</a></span>
+                                19</span></a>
                     </li>
-                    <li class="my-list-group-item "><a href="/auth/dashboard/add-dream" class="dashboard-link">Add
+                    <li class="my-list-group-item "><a href="/dreams/add-dream" class="dashboard-link d-block">Add
                             Dreams</a></li>
                 </ul>
                 <div class="text-center mb-4">
@@ -48,6 +50,7 @@
                 </div>
             </div>
             <div class="col-md-8  mt-5">
+                {{>_message}}
                 {{{body}}}
             </div>
         </div>
@@ -67,8 +70,12 @@
     <script>
         $(document).ready(function () {
             $('#dreamsTable').DataTable();
-            document.querySelector('.previous').setAttribute('style', 'color:white !important;');;
-            document.querySelector('.next').setAttribute('style', 'color:white !important;');;
+            const prev = document.querySelector('.previous');
+            if (prev)
+                prev.setAttribute('style', 'color:white !important;');
+            const next = document.querySelector('.next')
+            if (next)
+                next.setAttribute('style', 'color:white !important;');;
         });
 
     </script>

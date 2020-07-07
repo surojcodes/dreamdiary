@@ -5,18 +5,19 @@
         <hr>
     </div>
     <div class="mt-5 pb-5">
-        <div class="custom-card">
+        {{#each dreams}}
+        <div class="custom-card mb-3">
             <div class="custom-card-header">
-                <a href="/dreams/some-id">
-                    <h3 class="d-inline-block">Upside Down World</h3><br>
+                <a href="/dreams/{{slug}}" style="color: white;">
+                    <h3 class="d-inline">{{title}}</h3><br>
                 </a>
-                <small class="text-custom-muted ">Posted By <a href="#">Suroj</a> m 13 hours ago</small>
+                <small class="text-custom-muted ">Posted By <a href="#">{{user.name}}</a>, &nbsp;
+                    {{formatDate createdAt 'MMMM Do YYYY'}}</small>
             </div>
             <div class="custom-card-body">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi maiores commodi cumque odit,
-                quidem
-                vero sed in
+                <p class="py-2"> {{excerpt}} .....................<a href="/dreams/{{slug}}"> Continue Reading</a></p>
             </div>
+
             <div class="mt-2">
                 <i class=" text-info fas fa-thumbs-up mr-1"></i>
                 <small class="mr-3">1.2k</small>
@@ -28,6 +29,9 @@
                 <small class="mr-3">Report</small>
             </div>
         </div>
+        {{else}}
+        <p class="text-center">No public stories..</p>
+        {{/each}}
     </div>
 </div>
 {{> _footer }}

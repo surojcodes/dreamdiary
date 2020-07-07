@@ -14,7 +14,7 @@ const DreamSchema = new mongoose.Schema({
     visibility: {
         type: String,
         enum: ['public', 'private'],
-        default: private
+        default: 'private'
     },
     content: {
         type: String,

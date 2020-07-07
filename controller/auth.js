@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
+const Dream = require('../models/Dream');
 /*
 @desc   To show login form
 @route  GET /auth/login
@@ -65,23 +66,17 @@ exports.register = async (req, res, next) => {
 exports.forgotPassword = (req, res, next) => {
     res.render('forgotPassword');
 }
-exports.loadDashboard = (req, res, next) => {
+exports.loadDashboard = async (req, res, next) => {
+    const dreams = await Dream.find({ user: req.user.id }).lean();
     res.render('dashboard_dreams', {
         layout: 'dashboard',
         name: req.user.name,
-        email: req.user.email || null
-
+        email: req.user.email || null,
+        dreams,
     });
 }
 exports.logOut = (req, res, next) => {
     req.logOut();
     req.flash('success_msg', 'You have been logged Out!');
     res.redirect('/auth/login');
-}
-exports.addDream = (req, res, next) => {
-    res.render('dashboard_add_dream', {
-        layout: 'dashboard',
-        name: req.user.name,
-        email: req.user.email || null
-    });
 }

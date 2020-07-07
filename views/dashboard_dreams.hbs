@@ -6,7 +6,6 @@
     <table id="dreamsTable" class="table text-white">
         <thead class="text-info">
             <tr>
-                <th scope="col">#</th>
                 <th scope="col">Title</th>
                 <th scope="col">Visibility</th>
                 <th scope="col">Created At</th>
@@ -14,13 +13,18 @@
             </tr>
         </thead>
         <tbody>
+            {{#each dreams}}
             <tr>
-                <th scope="row">1</th>
-                <td>Bizzare World</td>
-                <td>Public</td>
-                <td>June 6, 1992</td>
+                <td>{{title}}</td>
+                <td>{{visibility}}</td>
+                <td>{{formatDate createdAt 'MMMM Do YYYY, h:mm a'}}</td>
                 <td>Edit/Delete</td>
             </tr>
+            {{else}}
+            <tr class="text-center">
+                <td colspan="5">No dreams! Go add some..</td>
+            </tr>
+            {{/each}}
         </tbody>
     </table>
 </div>
