@@ -3,6 +3,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
+const { default: slugify } = require('slugify');
 
 
 module.exports = (passport) => {
@@ -16,9 +17,12 @@ module.exports = (passport) => {
             if (user) {
                 done(null, user);
             } else {
+                const toSlugify = `${profile.displayName}-${profile.id}`;
                 user = await User.create({
                     googleId: profile.id,
-                    name: profile.displayName
+                    name: profile.displayName,
+                    username: slugify(toSlugify, { lower: true })
+
                 });
                 done(null, user);
             }
@@ -59,9 +63,11 @@ module.exports = (passport) => {
                 if (user) {
                     done(null, user);
                 } else {
+                    const toSlugify = `${profile.displayName}-${profile.id}`;
                     user = await User.create({
                         facebookId: profile.id,
-                        name: profile.displayName
+                        name: profile.displayName,
+                        username: slugify(toSlugify, { lower: true }),
                     });
                     done(null, user);
                 }

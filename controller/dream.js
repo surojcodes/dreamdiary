@@ -1,7 +1,12 @@
 const mongoose = require('mongoose');
 const Dream = require('../models/Dream');
+const User = require('../models/User');
 const slugify = require('slugify');
 
+/*
+@desc   Show add dream page
+@route  GET /dreams/add-dream
+*/
 exports.showAddDreamForm = (req, res, next) => {
     res.render('dashboard_add_dream', {
         layout: 'dashboard',
@@ -9,7 +14,10 @@ exports.showAddDreamForm = (req, res, next) => {
         email: req.user.email || null
     });
 }
-
+/*
+@desc   Add a  dream
+@route  POST /dreams
+*/
 exports.addDream = async (req, res, next) => {
     let errors = [];
     const { title, excerpt, content, tags, visibility } = req.body;
@@ -37,6 +45,10 @@ exports.addDream = async (req, res, next) => {
         res.render('error/500');
     }
 }
+/*
+@desc   Returns all  public dreams form all users
+@route  GET /dreams
+*/
 
 exports.showPublicDreams = async (req, res, next) => {
     try {
@@ -49,18 +61,42 @@ exports.showPublicDreams = async (req, res, next) => {
         res.render('error/500');
     }
 }
+/*
+@desc   Return a specifuc public dream
+@route  GET /dreams/:slug
+*/
 exports.loadDream = async (req, res, next) => {
     try {
         const dream = await Dream.findOne({ slug: req.params.slug }).populate('user').lean();
         if (!dream || dream.visibility == 'private') {
-            res.render('error/404');
+            res.render('error/404', { message: 'Dream Not Found!' });
         }
-        console.log(dream);
+        // console.log(dream);
         res.render('dream', {
             dream
         });
     } catch (err) {
         console.log(err);
+        res.render('error/500');
+    }
+}
+/*
+@desc   Return a user's public dreams
+@route  GET /dreams/user/:username
+*/
+exports.showUserDreams = async (req, res, next) => {
+    try {
+        let user = await User.findOne({ username: req.params.username });
+        if (!user) {
+            return res.render('error/404', { message: 'User Not Found!' });
+        }
+        const dreams = await Dream.find({ user: user['id'], visibility: 'public' }).populate('user').lean();
+        user = await User.findOne({ username: req.params.username }).lean();
+        res.render('userdreams', {
+            dreams, user
+        });
+    } catch (error) {
+        console.log(error);
         res.render('error/500');
     }
 }

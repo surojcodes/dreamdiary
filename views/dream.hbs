@@ -2,8 +2,9 @@
     <div class="text-center mb-1 pt-4">
         <h1 class="text-gray"> " {{dream.title}} "</h1>
         <div class="text-right">
-            <small class="mr-3"><a href="#"><i class="fas fa-pen-nib"></i> {{dream.user.name}}</a> </small>
-            <small><i class="fas fa-calendar"></i> {{formatDate dream.createdAt 'MMMM Do YYYY'}}</small>
+            <small class="mr-3"><a href="/dreams/user/{{dream.user.username}}"><i class="fas fa-pen-nib"></i>
+                    {{dream.user.name}}</a> </small>
+            <small><i class=" fas fa-calendar"></i> {{formatDate dream.createdAt 'MMMM Do YYYY'}}</small>
         </div>
         <hr>
     </div>
@@ -13,7 +14,7 @@
         </p>
         Tags: <em>tag1, tag2, tag3</em>
         <div class="mt-3">
-            <a href="#" class="btn btn-outline-info">More by {{dream.user.name}} </a>
+            <a href="/dreams/user/{{dream.user.username}}" class="btn btn-outline-info">More by {{dream.user.name}} </a>
         </div>
 
     </div>
