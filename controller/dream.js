@@ -154,6 +154,7 @@ exports.UpdateDream = async (req, res, next) => {
         }
         //update dream
         dream.title = title;
+        dream.slug = slugify(title, { lower: true });
         dream.excerpt = excerpt;
         dream.content = content;
         dream.tags = tags;
@@ -163,6 +164,30 @@ exports.UpdateDream = async (req, res, next) => {
 
         req.flash('success_msg', 'Dream updated successfully!');
         res.redirect('/auth/dashboard');
+    } catch (error) {
+        console.log(error);
+        res.render('error/500');
+    }
+}
+
+
+/*
+@desc   Delete dream
+@route  DELETE /dreams/delete/:slug
+*/
+exports.deleteDream = async (req, res, next) => {
+    try {
+        const dream = await Dream.findOne({ slug: req.params.slug });
+        if (!dream) {
+            return res.render('error/400', { message: 'Dream Not Found!', status: 404 });
+        }
+        if (dream.user != req.user.id) {
+            return res.render('error/400', { message: 'Action Not authorized!', status: 401 });
+        }
+        await dream.remove();
+        req.flash('success_msg', 'Dream deleted successfully!');
+        res.redirect('/auth/dashboard');
+
     } catch (error) {
         console.log(error);
         res.render('error/500');

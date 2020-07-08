@@ -77,6 +77,7 @@ exports.loadDashboard = async (req, res, next) => {
         name: req.user.name,
         email: req.user.email || null,
         dreams,
+        count: dreams.length
     });
 }
 exports.logOut = (req, res, next) => {

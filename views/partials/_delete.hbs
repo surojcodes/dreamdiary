@@ -1,0 +1,7 @@
+<script>
+    $('.delete').click((e) => {
+        const slug = e.target.id;
+        $('#deleteForm').attr('action', `/dreams/delete/${slug}`);
+        $('#deleteModal').modal('show');
+    })
+</script>
