@@ -12,7 +12,12 @@
         <p class="dream-body-para">
             {{{dream.content}}}
         </p>
-        Tags: <em>tag1, tag2, tag3</em>
+        Tags:
+        {{#each tags}}
+        <a href="#"> <em>#{{this}}</em></a>
+        {{else}}
+        No Tags !
+        {{/each}}
         <div class="mt-3">
             <a href="/dreams/user/{{dream.user.username}}" class="btn btn-outline-info">More by {{dream.user.name}} </a>
         </div>

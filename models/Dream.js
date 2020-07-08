@@ -25,6 +25,7 @@ const DreamSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
+    tags: String,
     createdAt: {
         type: Date,
         default: Date.now

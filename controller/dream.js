@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const Dream = require('../models/Dream');
 const User = require('../models/User');
+const Tag = require('../models/Tag');
+
 const slugify = require('slugify');
 
 /*
@@ -20,7 +22,8 @@ exports.showAddDreamForm = (req, res, next) => {
 */
 exports.addDream = async (req, res, next) => {
     let errors = [];
-    const { title, excerpt, content, tags, visibility } = req.body;
+    const { title, excerpt, content, visibility } = req.body;
+    let { tags } = req.body;
     if (!title || !excerpt || !content) {
         errors.push({ msg: 'Please add all the required fields' });
     }
@@ -36,8 +39,30 @@ exports.addDream = async (req, res, next) => {
     try {
         req.body.user = req.user.id;
         req.body.slug = slugify(req.body.title, { lower: true });
+        if (tags) {
+            if (tags.charAt(tags.length - 1) == ',') {
+                tags = tags.substring(0, tags.length - 1);
+            }
+            const tagArray = tags.split(',');
+            tagArray.forEach(async (tag) => {
+                tag = tag.replace(/ /g, '');
+                const tagdb = await Tag.findOne({ title: tag });
+                if (!tagdb) {
+                    await Tag.create({
+                        title: tag,
+                        user: req.user.id
+                    });
+                }
+            });
+        }
+        let tagArray = tags.split(',');
 
+        tagArray = tagArray.map(tag => {
+            return tag.replace(/ /g, '');
+        });
+        req.body.tags = tagArray.join(',');
         await Dream.create(req.body);
+
         req.flash('success_msg', 'Dream logged successfully!');
         res.redirect('/auth/dashboard');
     } catch (err) {
@@ -45,11 +70,11 @@ exports.addDream = async (req, res, next) => {
         res.render('error/500');
     }
 }
+
 /*
 @desc   Returns all  public dreams form all users
 @route  GET /dreams
 */
-
 exports.showPublicDreams = async (req, res, next) => {
     try {
         const dreams = await Dream.find({ visibility: 'public' }).sort('-createdAt').populate('user').lean();
@@ -71,9 +96,9 @@ exports.loadDream = async (req, res, next) => {
         if (!dream || dream.visibility == 'private') {
             return res.render('error/400', { message: 'Dream Not Found!', status: 404 });
         }
-        // console.log(dream);
+        const tags = dream.tags.split(',');
         res.render('dream', {
-            dream
+            dream, tags
         });
     } catch (err) {
         console.log(err);
@@ -139,7 +164,8 @@ exports.UpdateDream = async (req, res, next) => {
         }
         //validate
         let errors = [];
-        const { title, excerpt, content, tags, visibility } = req.body;
+        const { title, excerpt, content, visibility } = req.body;
+        let { tags } = req.body;
         if (!title || !excerpt || !content) {
             errors.push({ msg: 'Please add all the required fields' });
         }
@@ -157,7 +183,29 @@ exports.UpdateDream = async (req, res, next) => {
         dream.slug = slugify(title, { lower: true });
         dream.excerpt = excerpt;
         dream.content = content;
-        dream.tags = tags;
+
+        if (tags) {
+            if (tags.charAt(tags.length - 1) == ',') {
+                tags = tags.substring(0, tags.length - 1);
+            }
+            const tagArray = tags.split(',');
+            tagArray.forEach(async (tag) => {
+                tag = tag.replace(/ /g, '');
+                const tagdb = await Tag.findOne({ title: tag });
+                if (!tagdb) {
+                    await Tag.create({
+                        title: tag,
+                        user: req.user.id
+                    });
+                }
+            });
+        }
+        let tagArray = tags.split(',');
+        tagArray = tagArray.map(tag => {
+            return tag.replace(/ /g, '');
+        });
+        dream.tags = tagArray.join(',');
+
         dream.visibility = visibility;
 
         await dream.save();
