@@ -3,6 +3,7 @@ const dotenv = require('dotenv');
 const exphbs = require('express-handlebars');
 const path = require('path');
 const mongoose = require('mongoose');
+const methodOverride = require('method-override');
 
 // configue to use env vars
 dotenv.config({ path: './config/config.env' });
@@ -58,14 +59,25 @@ app.use((req, res, next) => {
     res.locals.error = req.flash('error');
     res.locals.error_msg = req.flash('error_msg');
     res.locals.success_msg = req.flash('success_msg');
+    res.locals.user = req.user || null;
     next();
 });
+
+app.use(
+    methodOverride(function (req, res) {
+        if (req.body && typeof req.body === 'object' && '_method' in req.body) {
+            // look in urlencoded POST bodies and delete it
+            let method = req.body._method
+            delete req.body._method
+            return method
+        }
+    })
+);
 
 //Register Route 
 app.use('/', require('./routes/web'));
 app.use('/auth', require('./routes/auth'));
 app.use('/dreams', require('./routes/dream'));
-
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

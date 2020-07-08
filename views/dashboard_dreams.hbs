@@ -18,7 +18,11 @@
                 <td>{{title}}</td>
                 <td>{{visibility}}</td>
                 <td>{{formatDate createdAt 'MMMM Do YYYY, h:mm a'}}</td>
-                <td>Edit/Delete</td>
+                <td>
+                    <a href="/dreams/edit/{{slug}}" class="btn btn-warning btn-sm">Edit</a>
+                    <a href="#" class="btn btn-danger btn-sm">Delete</a>
+
+                </td>
             </tr>
             {{else}}
             <tr class="text-center">

@@ -69,7 +69,7 @@ exports.loadDream = async (req, res, next) => {
     try {
         const dream = await Dream.findOne({ slug: req.params.slug }).populate('user').lean();
         if (!dream || dream.visibility == 'private') {
-            res.render('error/404', { message: 'Dream Not Found!' });
+            return res.render('error/400', { message: 'Dream Not Found!', status: 404 });
         }
         // console.log(dream);
         res.render('dream', {
@@ -88,13 +88,81 @@ exports.showUserDreams = async (req, res, next) => {
     try {
         let user = await User.findOne({ username: req.params.username });
         if (!user) {
-            return res.render('error/404', { message: 'User Not Found!' });
+            return res.render('error/400', { message: 'User Not Found!', status: 404 });
         }
         const dreams = await Dream.find({ user: user['id'], visibility: 'public' }).populate('user').lean();
         user = await User.findOne({ username: req.params.username }).lean();
         res.render('userdreams', {
             dreams, user
         });
+    } catch (error) {
+        console.log(error);
+        res.render('error/500');
+    }
+}
+
+/*
+@desc   Show form to edit dream
+@route  GET /dreams/edit/:slug
+*/
+exports.loadEditDreamForm = async (req, res, next) => {
+    try {
+        const dream = await Dream.findOne({ slug: req.params.slug }).lean();
+        if (!dream) {
+            return res.render('error/400', { message: 'Dream Not Found!', status: 404 });
+        }
+        if (dream.user != req.user.id) {
+            return res.render('error/400', { message: 'Not authorized!', status: 401 });
+        }
+        res.render('dashboard_edit_dream', {
+            layout: 'dashboard',
+            dream
+        });
+    } catch (error) {
+        console.log(error);
+        res.render('error/500');
+    }
+}
+
+/*
+@desc   Update dream
+@route  PUT   /dreams/edit/:slug
+*/
+exports.UpdateDream = async (req, res, next) => {
+    try {
+        const dream = await Dream.findOne({ slug: req.params.slug });
+        if (!dream) {
+            return res.render('error/400', { message: 'Dream Not Found!', status: 404 });
+        }
+        if (dream.user != req.user.id) {
+            return res.render('error/400', { message: 'Not authorized!', status: 401 });
+        }
+        //validate
+        let errors = [];
+        const { title, excerpt, content, tags, visibility } = req.body;
+        if (!title || !excerpt || !content) {
+            errors.push({ msg: 'Please add all the required fields' });
+        }
+        if (excerpt.length > 100) {
+            errors.push({ msg: 'Excerpt cannot be longer than 100 characters' });
+        }
+        if (errors.length > 0) {
+            return res.render('dashboard_edit_dream', {
+                layout: 'dashboard',
+                errors, title, excerpt, content, tags, visibility
+            });
+        }
+        //update dream
+        dream.title = title;
+        dream.excerpt = excerpt;
+        dream.content = content;
+        dream.tags = tags;
+        dream.visibility = visibility;
+
+        await dream.save();
+
+        req.flash('success_msg', 'Dream updated successfully!');
+        res.redirect('/auth/dashboard');
     } catch (error) {
         console.log(error);
         res.render('error/500');
