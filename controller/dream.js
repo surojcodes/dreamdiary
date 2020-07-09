@@ -115,7 +115,7 @@ exports.showUserDreams = async (req, res, next) => {
         if (!user) {
             return res.render('error/400', { message: 'User Not Found!', status: 404 });
         }
-        const dreams = await Dream.find({ user: user['id'], visibility: 'public' }).populate('user').lean();
+        const dreams = await Dream.find({ user: user['id'], visibility: 'public' }).sort('-createdAt').populate('user').lean();
         user = await User.findOne({ username: req.params.username }).lean();
         res.render('userdreams', {
             dreams, user
@@ -236,6 +236,33 @@ exports.deleteDream = async (req, res, next) => {
         req.flash('success_msg', 'Dream deleted successfully!');
         res.redirect('/auth/dashboard');
 
+    } catch (error) {
+        console.log(error);
+        res.render('error/500');
+    }
+}
+
+/*
+@desc   Get dreams with a particular tag
+@route  GET /dreams/tag/:title
+*/
+exports.getDreamsByTag = async (req, res) => {
+    try {
+        const publicDreams = await Dream.find({ visibility: 'public' }).lean();
+        let dreams = [];
+        publicDreams.forEach(dream => {
+            const tags = dream.tags.split(',');
+            tags.forEach(tag => {
+                if (tag == req.params.title) {
+                    dreams.push(dream);
+                }
+            });
+        });
+
+        res.render('tagdreams', {
+            tag: req.params.title,
+            dreams
+        })
     } catch (error) {
         console.log(error);
         res.render('error/500');

@@ -1,0 +1,39 @@
+<div class="container overlay form-container text-white">
+    <div class="text-center mb-3 pt-4">
+        <h1>Dreams tagged "<span class="text-info"> {{tag}}</span> "</h1>
+        <small class="text-info">Read them and see what unfolds.....</small>
+        <hr>
+    </div>
+    <div class="mt-5 pb-5">
+        {{#each dreams}}
+        <div class="custom-card mb-3">
+            <div class="custom-card-header">
+                <a href="/dreams/{{slug}}" style="color: white;">
+                    <h3 class="d-inline">{{title}}</h3><br>
+                </a>
+                <small class="text-custom-muted ">Posted By <a href="/dreams/user/{{user.username}}">{{user.name}}</a>,
+                    &nbsp;
+                    {{formatDate createdAt 'MMMM Do YYYY'}}</small>
+            </div>
+            <div class=" custom-card-body">
+                <p class="py-2"> {{excerpt}} .....................<a href="/dreams/{{slug}}"> Continue
+                        Reading</a></p>
+            </div>
+
+            <div class="mt-2">
+                <i class=" text-info fas fa-thumbs-up mr-1"></i>
+                <small class="mr-3">1.2k</small>
+
+                <i class=" text-info fas fa-comment mr-1"></i>
+                <small class="mr-3">2k</small>
+
+                <i class=" text-info fas fa-flag mr-1"></i>
+                <small class="mr-3">Report</small>
+            </div>
+        </div>
+        {{else}}
+        <p class="text-center">No public stories by..</p>
+        {{/each}}
+    </div>
+</div>
+{{> _footer }}
