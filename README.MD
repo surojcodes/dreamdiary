@@ -32,16 +32,7 @@ npm start
 * Registered Users can
   * log their dream with tags 
   * can mark their dream private/public
-  * Edit/Delete their dreams
-
-***
-
-## Authorization
-* A registered can modify and delete his/her own dreams only.
-
-***
-## UI
-A  simple user interface using [custom Bootstrap 4.0 theme](https://themestr.app/)
+  * Edit/Delete their own dreams only
 
 *** 
 ## Demo
