@@ -35,7 +35,11 @@ npm start
   * Edit/Delete their own dreams only
 
 *** 
-## Demo
+## Screenshots
+![alt tag](https://surojmaharjan0.github.io/projectimages/images/dd1.PNG)
+![alt tag](https://surojmaharjan0.github.io/projectimages/images/dd2.PNG)
+![alt tag](https://surojmaharjan0.github.io/projectimages/images/dd3.PNG)
+ 
 Website is live [here](http://dreamdiaryy.herokuapp.com/)
 * Version **1.0**
 * Author **Suroj Maharjan**
